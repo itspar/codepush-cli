@@ -6,12 +6,12 @@ The **CodePush CLI** is a Node.js application that allows users to deploy and ma
 
 ### Global Installation
 ```bash
-npm install -g @itspar/codepush
+npm install -g code-push-itspar
 ```
 
 Or using yarn:
 ```bash
-yarn global add @itspar/codepush
+yarn global add code-push-itspar
 ```
 
 After global installation, you can use the CLI directly:
@@ -22,10 +22,10 @@ code-push-itspar <command>
 ### Project Installation
 ```bash
 # Using npm
-npm install --save-dev @itspar/codepush
+npm install --save-dev code-push-itspar
 
 # Using yarn
-yarn add --dev @itspar/codepush
+yarn add --dev code-push-itspar
 ```
 After project installation, you can use the CLI through npm/yarn:
 ```bash
@@ -36,7 +36,7 @@ npm run code-push-itspar <command>
 yarn code-push-itspar <command>
 
 # Using npx
-npx @itspar/codepush <command>
+npx code-push-itspar <command>
 ```
 
 ## Authentication

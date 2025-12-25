@@ -1,5 +1,5 @@
 {
-  "name": "@itspar/codepush",
+  "name": "code-push-itspar",
   "version": "1.0.0",
   "description": "Management CLI for CodePush - deploy mobile app updates over-the-air",
   "main": "./script/cli.js",
