@@ -19,6 +19,11 @@ After global installation, you can use the CLI directly:
 code-push-itspar <command>
 ```
 
+**Troubleshooting:** If you get a "permission denied" error on macOS/Linux, run:
+```bash
+chmod +x $(npm root -g)/code-push-itspar/bin/script/cli.js
+```
+
 ### Project Installation
 ```bash
 # Using npm
@@ -49,7 +54,7 @@ Most commands require authentication. You'll need an access key and server URL t
 code-push-itspar login --accessKey <your-access-key> <server-url>
 
 # Example
-code-push-itspar login --accessKey abc123xyz https://codepush.jaswantdhayal.com
+code-push-itspar login --accessKey abc123xyz https://server.codepush.online
 
 # Check login status
 code-push-itspar whoami

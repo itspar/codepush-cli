@@ -1,6 +1,6 @@
 {
   "name": "code-push-itspar",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Management CLI for CodePush - deploy mobile app updates over-the-air",
   "main": "./script/cli.js",
   "scripts": {
@@ -15,7 +15,7 @@
     "exec": "npm run build && npm run build && npm install -g",
     "prepare": "npm run build",
     "prepack": "npm run build",
-    "prepublishOnly": "npm run lint",
+    "postinstall": "chmod +x ./bin/script/cli.js || true",
     "test": "echo \"No tests specified\" && exit 0",
     "local:install": "npm run build && npm install -g",
     "local:link": "npm run build && npm link"
