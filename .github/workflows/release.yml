@@ -46,31 +46,19 @@ jobs:
           PREVIOUS_VERSION=$(node -p "require('/tmp/old-package.json').version")
           echo "Previous version: $PREVIOUS_VERSION"
           
+          echo "PACKAGE_VERSION=$CURRENT_VERSION" >> $GITHUB_ENV
+          echo "PACKAGE_NAME=$(node -p "require('./package.json').name")" >> $GITHUB_ENV
+          
           if [ "$CURRENT_VERSION" != "$PREVIOUS_VERSION" ]; then
             echo "Version changed from $PREVIOUS_VERSION to $CURRENT_VERSION"
             echo "VERSION_CHANGED=true" >> $GITHUB_ENV
-            echo "PACKAGE_VERSION=$CURRENT_VERSION" >> $GITHUB_ENV
-            echo "PACKAGE_NAME=$(node -p "require('./package.json').name")" >> $GITHUB_ENV
           else
-            echo "Version unchanged - skipping release"
+            echo "Version unchanged - will still publish to NPM"
             echo "VERSION_CHANGED=false" >> $GITHUB_ENV
           fi
 
-      # Check if version exists on NPM
-      - name: Check NPM version
-        if: env.VERSION_CHANGED == 'true'
-        run: |
-          if npm view ${{ env.PACKAGE_NAME }}@${{ env.PACKAGE_VERSION }} version 2>/dev/null; then
-            echo "Warning: Version ${{ env.PACKAGE_VERSION }} already exists on npm"
-            echo "SKIP_PUBLISH=true" >> $GITHUB_ENV
-          else
-            echo "Version ${{ env.PACKAGE_VERSION }} is ready for publishing"
-            echo "SKIP_PUBLISH=false" >> $GITHUB_ENV
-          fi
-
-      # Create GitHub Release
-      - name: Create GitHub Release
-        if: env.VERSION_CHANGED == 'true' && env.SKIP_PUBLISH == 'false'
+      # Create or Update GitHub Release
+      - name: Create or Update GitHub Release
         uses: softprops/action-gh-release@v1
         with:
           tag_name: v${{ env.PACKAGE_VERSION }}
@@ -78,28 +66,25 @@ jobs:
           body: |
             ## Release v${{ env.PACKAGE_VERSION }}
             
-            🚀 New version published to NPM: [${{ env.PACKAGE_NAME }}@${{ env.PACKAGE_VERSION }}](https://www.npmjs.com/package/${{ env.PACKAGE_NAME }})
+            🚀 Published to NPM: [${{ env.PACKAGE_NAME }}@${{ env.PACKAGE_VERSION }}](https://www.npmjs.com/package/${{ env.PACKAGE_NAME }})
             
             ### Installation
             ```bash
             npm install -g ${{ env.PACKAGE_NAME }}@${{ env.PACKAGE_VERSION }}
             ```
+            
+            _Last updated: ${{ github.event.head_commit.timestamp }}_
           draft: false
           prerelease: false
           token: ${{ secrets.TOKEN }}
+          make_latest: true
 
-      # Publish to npm
+      # Publish to npm (always)
       - name: Publish to NPM
-        if: env.VERSION_CHANGED == 'true' && env.SKIP_PUBLISH == 'false'
         run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-      - name: Skip notification
-        if: env.VERSION_CHANGED == 'false' || env.SKIP_PUBLISH == 'true'
+      - name: Success notification
         run: |
-          if [ "${{ env.VERSION_CHANGED }}" == "false" ]; then
-            echo "⏭️ Skipped - version unchanged in package.json"
-          else
-            echo "⏭️ Skipped - version already exists on NPM"
-          fi
+          echo "✅ Successfully published ${{ env.PACKAGE_NAME }}@${{ env.PACKAGE_VERSION }} to NPM"
