@@ -6,6 +6,10 @@ on:
       - main
   workflow_dispatch:
 
+permissions:
+  contents: write
+  packages: write
+
 jobs:
   release:
     runs-on: ubuntu-latest
@@ -67,12 +71,10 @@ jobs:
       # Create GitHub Release
       - name: Create GitHub Release
         if: env.VERSION_CHANGED == 'true' && env.SKIP_PUBLISH == 'false'
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: softprops/action-gh-release@v1
         with:
           tag_name: v${{ env.PACKAGE_VERSION }}
-          release_name: Release v${{ env.PACKAGE_VERSION }}
+          name: Release v${{ env.PACKAGE_VERSION }}
           body: |
             ## Release v${{ env.PACKAGE_VERSION }}
             
@@ -84,6 +86,7 @@ jobs:
             ```
           draft: false
           prerelease: false
+          token: ${{ secrets.TOKEN }}
 
       # Publish to npm
       - name: Publish to NPM
