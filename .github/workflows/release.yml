@@ -58,26 +58,26 @@ jobs:
           fi
 
       # Create or Update GitHub Release
-      - name: Create or Update GitHub Release
-        uses: softprops/action-gh-release@v1
-        with:
-          tag_name: v${{ env.PACKAGE_VERSION }}
-          name: Release v${{ env.PACKAGE_VERSION }}
-          body: |
-            ## Release v${{ env.PACKAGE_VERSION }}
+      # - name: Create or Update GitHub Release
+      #   uses: softprops/action-gh-release@v1
+      #   with:
+      #     tag_name: v${{ env.PACKAGE_VERSION }}
+      #     name: Release v${{ env.PACKAGE_VERSION }}
+      #     body: |
+      #       ## Release v${{ env.PACKAGE_VERSION }}
             
-            🚀 Published to NPM: [${{ env.PACKAGE_NAME }}@${{ env.PACKAGE_VERSION }}](https://www.npmjs.com/package/${{ env.PACKAGE_NAME }})
+      #       🚀 Published to NPM: [${{ env.PACKAGE_NAME }}@${{ env.PACKAGE_VERSION }}](https://www.npmjs.com/package/${{ env.PACKAGE_NAME }})
             
-            ### Installation
-            ```bash
-            npm install -g ${{ env.PACKAGE_NAME }}@${{ env.PACKAGE_VERSION }}
-            ```
+      #       ### Installation
+      #       ```bash
+      #       npm install -g ${{ env.PACKAGE_NAME }}@${{ env.PACKAGE_VERSION }}
+      #       ```
             
-            _Last updated: ${{ github.event.head_commit.timestamp }}_
-          draft: false
-          prerelease: false
-          token: ${{ secrets.TOKEN }}
-          make_latest: true
+      #       _Last updated: ${{ github.event.head_commit.timestamp }}_
+      #     draft: false
+      #     prerelease: false
+      #     token: ${{ secrets.TOKEN }}
+      #     make_latest: true
 
       # Publish to npm (always)
       - name: Publish to NPM
