@@ -51,7 +51,7 @@ import {
 } from "./utils/file-utils";
 import { CodePushConfigConstants } from "./utils/config.constants";
 
-const configFilePath: string = path.join(process.env.LOCALAPPDATA || process.env.HOME, ".code-push.config");
+const configFilePath: string = path.join(process.env.LOCALAPPDATA || process.env.HOME, ".itspar-code-push.config");
 const emailValidator = require("email-validator");
 const packageJson = require("../../package.json");
 const parseXml = Q.denodeify(require("xml2js").parseString);

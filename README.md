@@ -1,6 +1,11 @@
 # CodePush CLI
 
+[![npm version](https://img.shields.io/npm/v/code-push-itspar.svg)](https://www.npmjs.com/package/code-push-itspar)
+[![npm downloads](https://img.shields.io/npm/dm/code-push-itspar.svg)](https://www.npmjs.com/package/code-push-itspar)
+
 The **CodePush CLI** is a Node.js application that allows users to deploy and manage over-the-air updates for React Native applications.
+
+📦 **NPM Package:** [https://www.npmjs.com/package/code-push-itspar](https://www.npmjs.com/package/code-push-itspar)
 
 ## Installation & Usage
 
